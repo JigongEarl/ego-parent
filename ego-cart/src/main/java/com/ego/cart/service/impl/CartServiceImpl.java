@@ -40,7 +40,6 @@ public class CartServiceImpl implements CartService{
 		String token = CookieUtils.getCookieValue(request, "TT_TOKEN");
 		//从redis中获取用户信息
 		TbUser userJson = JsonUtils.jsonToPojo(jedisDaoImpl.get(token), TbUser.class);
-		System.out.println("addCart:user:"+userJson);
 		//获取用户名
 		String username = userJson.getUsername();
 		//设置redis中保存购物车信息的key为：cartKey+用户名
@@ -91,12 +90,11 @@ public class CartServiceImpl implements CartService{
 		 */
 		String token = CookieUtils.getCookieValue(request, "TT_TOKEN");
 		TbUser user = JsonUtils.jsonToPojo(jedisDaoImpl.get(token), TbUser.class);
-		System.out.println("showCart:user:"+user);
+		
 		/*
 		 * redis中购物车信息key-value
 		 */
 		String cartJson = jedisDaoImpl.get(cartKey + user.getUsername());
-		System.out.println("showCart:cartJson:"+cartJson);
 		return JsonUtils.jsonToList(cartJson, TbItemChild.class);
 	}
 	
